@@ -15,6 +15,16 @@ drop function um();
 
 alter table emin drop column quantity;
 
+\\-------------------terminar
+drop FUNCTION um();
+create function um() returns void as $$
+declare
+	min int;
+begin
+	min= select min from emin where eid=NEW.eid;
+	RAISE NOTICE 'minimo é %', min;
+end;
+$$ language 'plpgsql';
 
 
 2 - Se uma operação de incremento de stock for feito, a tabela purchase deve ser atualizada, ou seja, retirado o item para futuras compras ;
