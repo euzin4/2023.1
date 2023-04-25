@@ -1,5 +1,6 @@
 1- se o produto em estoque chegar ao estoque mínimo de 10% então o mesmo deve ser inserido na tabela purchase (eid int, data date, actualValue). Deve-se ser criado a tabela purchase. 
 
+/*criação da tabela emin (valores minimos)*/
 select * into emin from stock;
 alter table emin add column min int;
 
@@ -10,21 +11,29 @@ begin
 end;
 $$ language 'plpgsql';
 
-select um();
 drop function um();
 
 alter table emin drop column quantity;
 
-\\-------------------terminar
+/*-------------------função*/
+DROP TRIGGER tg_um ON stock;
+
 drop FUNCTION um();
-create function um() returns void as $$
+create function um() returns TRIGGER as $$
 declare
-	min int;
+	vm int;
+	va int;
 begin
-	min= select min from emin where eid=NEW.eid;
-	RAISE NOTICE 'minimo é %', min;
+	select min into vm from emin where eid = NEW.eid;
+	select quantity into va from stock where eid = NEW.eid;
+	RAISE NOTICE 'minimo é % e atual é %', vm, va;
+	return NEW;
 end;
 $$ language 'plpgsql';
+
+/*select um();*/
+
+CREATE TRIGGER tg_um BEFORE UPDATE ON stock FOR EACH ROW EXECUTE PROCEDURE um();
 
 
 2 - Se uma operação de incremento de stock for feito, a tabela purchase deve ser atualizada, ou seja, retirado o item para futuras compras ;
