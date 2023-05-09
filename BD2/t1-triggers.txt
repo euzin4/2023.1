@@ -1,6 +1,9 @@
 1- se o produto em estoque chegar ao estoque mínimo de 10% então o mesmo deve ser inserido na tabela purchase (eid int, data date, actualValue). Deve-se ser criado a tabela purchase. 
 
 /*criação da tabela emin (valores minimos)*/
+--drop table emin;
+--drop trigger tg_um on stock;
+
 select * into emin from stock;
 alter table emin add column min int;
 update emin set min = quantity * 0.1;
