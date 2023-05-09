@@ -11,16 +11,19 @@ alter table emin drop column quantity;
 
 /*-------------------função*/
 DROP TRIGGER tg_um ON stock;
-
 drop FUNCTION um();
+
 create function um() returns TRIGGER as $$
 declare
 	vm int;
 	va int;
 begin
 	select min into vm from emin where eid = NEW.eid;
-	select quantity into va from stock where eid = NEW.eid;
-	RAISE NOTICE 'minimo é % e atual é %', vm, va;
+	select NEW.quantity into va from stock where eid = NEW.eid;
+	if va <= vm then
+		insert into purchase(eid, data, actualvalue) values(NEW.eid,now(),va);
+		return NEW;
+	end if;
 	return NEW;
 end;
 $$ language 'plpgsql';
