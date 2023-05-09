@@ -33,8 +33,6 @@ begin
 end;
 $$ language 'plpgsql';
 
-/*select um();*/
-
 CREATE TRIGGER tg_um BEFORE UPDATE ON stock FOR EACH ROW EXECUTE PROCEDURE um();
 
 
