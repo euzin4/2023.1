@@ -11,6 +11,8 @@ begin
 end;
 $$ language 'plpgsql';
 
+select um();
+
 drop function um();
 
 alter table emin drop column quantity;
