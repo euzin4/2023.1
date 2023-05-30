@@ -14,7 +14,7 @@ with open("/home/aluno/Imagens/undoredo/metadado.json") as dadosini:    #le todo
 # Função para criar conexão no banco
 def conecta_db():
   con = psycopg2.connect(host='localhost', 
-                         database='db_name',
+                         database='urbd',
                          user='postgres', 
                          password='postgres')
   return con
@@ -31,15 +31,8 @@ def criar_db(sql):
 sql = 'DROP TABLE IF EXISTS public.deputados'
 criar_db(sql)
 # Criando a tabela dos deputados
-sql = '''CREATE TABLE public.deputados 
-      ( id            character varying(10), 
-        uri           character varying(100), 
-        nome          character varying(500), 
-        siglaPartido  character varying(50), 
-        uriPartido    character varying(200), 
-        siglaUf       character varying(10), 
-        idLegislatura character varying(10), 
-        urlFoto       character varying(100), 
-        email         character varying(100) 
+sql = '''CREATE TABLE public.tabela 
+      ( a int,
+        b int
       )'''
 criar_db(sql)
