@@ -3,7 +3,7 @@ import psycopg2
 
 with open("/home/aluno/Imagens/undoredo/metadado.json") as dadosini:    #le todo o arquivo em "dadosini"
     dicionario = json.load(dadosini)    #salva os dados em um formato manipulavel
-    print(dicionario["INITIAL"])
+    #print(dicionario["INITIAL"])
     a0=dicionario["INITIAL"]["A"][0]    #salva um dado especifico em uma variavel
     a1=dicionario["INITIAL"]["A"][1]
     b0=dicionario["INITIAL"]["B"][0]
@@ -14,7 +14,7 @@ with open("/home/aluno/Imagens/undoredo/metadado.json") as dadosini:    #le todo
 # Função para criar conexão no banco
 def conecta_db():
   con = psycopg2.connect(host='localhost', 
-                         database='urbd',
+                         database='undoredo',
                          user='postgres', 
                          password='postgres')
   return con
@@ -28,11 +28,13 @@ def criar_db(sql):
   con.close()
 
 # Dropando a tabela caso ela já exista
-sql = 'DROP TABLE IF EXISTS public.deputados'
+sql = 'DROP TABLE IF EXISTS public.tabela'
 criar_db(sql)
-# Criando a tabela dos deputados
+# Criando a tabela
 sql = '''CREATE TABLE public.tabela 
       ( a int,
         b int
       )'''
+criar_db(sql)
+sql = '''insert into tabela (a,b) values(7, 8);'''
 criar_db(sql)
